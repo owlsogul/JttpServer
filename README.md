@@ -10,16 +10,40 @@ JSON 기반으로 Request/Response 방식으로 통신하는 자바 서버 라�
 
 ## 사용한 라이브러리
 ### Gson v2.8.5
-Json 오브젝트처리를 좀더 간단하고 쉽게 하고 싶어 사용하였다.
+#### 설명
+Json 오브젝트처리를 좀더 간단하고 쉽게 하고 싶어 사용하였다.<br>
 JttpServer 내에서 페이지를 개발하기 위해 꼭 필요한 라이브러리이다.
+#### 주소
+https://github.com/google/gson
 
 ## 사용 방법
 간단하게 사용방법을 알려드립니다.
+
 ### 서버 여는 방법
 JttpServer를 활용한 서버를 여는 방법
+1. JttpServer 객체를 생성합니다.
+2. (JttpServer 객체).open(원하는 포트); 로 포트를 선점합니다.
+3. (JttpServer 객체).listen(); 로 소켓을 받아들이기 시작합니다.
+
 ### 옵저버 사용 방법
-여러 이벤트들을 챙겨볼 수 있는 옵저버 사용 방법.
+현재 옵저버(이벤트들이 발생했을 때 호출됨):<br>
+ClientController 객체에서 등록
+- ClientConnectObserver: 클라이언트가 연결되었을 때 호출됨
+- ClientDisconnectObserver: 클라이언트 연결 해체 되었을 때 호출됨
+RequestController 객체에서 등록
+- ClientRequestObserver: 클라이언트가 요청을 하여 응답을 보내기전 호출됨
+
 ### 페이지 개발 방법
-페이지를 개발하는 방법
+1. RequestPage를 상속받아 원하는 일을 작성합니다.
+2. page-info.json 파일을 작성합니다.
+#### 예시
+{
+	"main":"request.Main",
+	"page_name":"test"
+}<br>
+main은 RequestPage의 주소, page_name은 page_name 입니다.
+3. jar 파일로 만들어 서버 디렉토리/RequestPages/ 디렉토리에 넣습니다.
+4. 서버를 실행하여 성공 로그가 뜨는지 확인합니다.
+
 
 
