@@ -21,10 +21,14 @@ https://github.com/google/gson
 간단하게 사용방법을 알려드립니다.
 
 ### 서버 여는 방법
-JttpServer를 활용한 서버를 여는 방법
+#### 기존 프로젝트 내에서 JttpServer를 활용한 서버를 여는 방법
 1. JttpServer 객체를 생성합니다.
 2. (JttpServer 객체).open(원하는 포트); 로 포트를 선점합니다.
 3. (JttpServer 객체).listen(); 로 소켓을 받아들이기 시작합니다.
+
+#### JttpServer를 바로 서버로 활용하는 방법
+1. java -jar JttpServer.jar (원하는 포트 번호)
+
 
 ### 옵저버 사용 방법
 현재 옵저버(이벤트들이 발생했을 때 호출됨):<br>
