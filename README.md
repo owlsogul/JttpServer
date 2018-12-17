@@ -19,6 +19,10 @@ https://github.com/google/gson
 
 ## 사용 방법
 간단하게 사용방법을 알려드립니다.
+### 다운로드 링크
+최신 버전을 다운로드 받아주세요.<br>
+https://github.com/owlsogul/JttpServer/releases
+
 
 ### 서버 여는 방법
 #### 기존 프로젝트 내에서 JttpServer를 활용한 서버를 여는 방법
