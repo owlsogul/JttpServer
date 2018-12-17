@@ -1,5 +1,6 @@
 # JttpServer
-JSON 기반으로 Request/Response 방식으로 통신하는 자바 서버 라이브러리
+JSON 기반으로 Request/Response 방식으로 통신하는 자바 서버 라이브러리<br>
+피드백/가르침은 언제나 환영합니다. owlsogul@naver.com 으로 문의 주세요.
 
 ## 개발 동기
 - 단순히 Json 통신을 위해서 Http 서버를 설치하고, 익숙하지 않은 다른 언어로 코딩하는게 불편한 상황이었다.
@@ -36,14 +37,14 @@ RequestController 객체에서 등록
 ### 페이지 개발 방법
 1. RequestPage를 상속받아 원하는 일을 작성합니다.
 2. page-info.json 파일을 작성합니다.
-#### 예시
+3. jar 파일로 만들어 서버 디렉토리/RequestPages/ 디렉토리에 넣습니다.
+4. 서버를 실행하여 성공 로그가 뜨는지 확인합니다.
+#### page-info.json 예시
 {
 	"main":"request.Main",
 	"page_name":"test"
 }<br>
 main은 RequestPage의 주소, page_name은 page_name 입니다.<br>
-3. jar 파일로 만들어 서버 디렉토리/RequestPages/ 디렉토리에 넣습니다.
-4. 서버를 실행하여 성공 로그가 뜨는지 확인합니다.
 
 
 
