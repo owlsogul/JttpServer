@@ -41,7 +41,7 @@ RequestController 객체에서 등록
 	"main":"request.Main",
 	"page_name":"test"
 }<br>
-main은 RequestPage의 주소, page_name은 page_name 입니다.
+main은 RequestPage의 주소, page_name은 page_name 입니다.<br>
 3. jar 파일로 만들어 서버 디렉토리/RequestPages/ 디렉토리에 넣습니다.
 4. 서버를 실행하여 성공 로그가 뜨는지 확인합니다.
 
