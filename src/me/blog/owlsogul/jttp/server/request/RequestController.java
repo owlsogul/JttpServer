@@ -12,6 +12,7 @@ import me.blog.owlsogul.jttp.server.observer.client.ClientRequestObserver;
 import me.blog.owlsogul.jttp.server.request.exception.DuplicatePageException;
 import me.blog.owlsogul.jttp.server.request.exception.NoRequestPageException;
 import me.blog.owlsogul.jttp.server.request.page.RequestPage;
+import me.blog.owlsogul.jttp.server.util.Level;
 import me.blog.owlsogul.jttp.server.util.Log;
 
 public class RequestController implements IRequestController{
@@ -33,10 +34,10 @@ public class RequestController implements IRequestController{
 			RequestPage requestPage = getRequestPage(request.getCommand());
 			response = requestPage.request(client, request);
 		} catch (JsonSyntaxException | NullPointerException e) {
-			Log.error(Log.Warning, e);
+			Log.error(Level.Warning, e);
 			response = new Response(Response.ErrorJsonParse, new JsonObject());
 		} catch (NoRequestPageException e) {
-			Log.error(Log.Warning, e);
+			Log.error(Level.Warning, e);
 			response = new Response(Response.ErrorNoRequestPage, new JsonObject());
 		}
 		if (response.getResponseData() == null) {

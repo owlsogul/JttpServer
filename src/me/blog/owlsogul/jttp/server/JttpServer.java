@@ -2,28 +2,19 @@ package me.blog.owlsogul.jttp.server;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonStreamParser;
 
 import me.blog.owlsogul.jttp.server.client.ClientController;
 import me.blog.owlsogul.jttp.server.client.IClientController;
 import me.blog.owlsogul.jttp.server.request.IRequestController;
-import me.blog.owlsogul.jttp.server.request.Request;
 import me.blog.owlsogul.jttp.server.request.RequestController;
 import me.blog.owlsogul.jttp.server.request.page.RequestPage;
 import me.blog.owlsogul.jttp.server.request.page.RequestPageLoader;
 import me.blog.owlsogul.jttp.server.util.Log;
+import me.blog.owlsogul.jttp.server.util.Level;
 
 public class JttpServer implements Runnable, IJttpServer{
 
@@ -59,14 +50,14 @@ public class JttpServer implements Runnable, IJttpServer{
 			
 			return true;
 		} catch (IOException e) {
-			Log.error(Level.SEVERE, e);
+			Log.error(Level.Severe, e);
 			return false;
 		}
 	}
 	
 	public void listen() {
 		if (isRunning == false) {
-			Log.log(Level.WARNING, "JttpServer.open() 메소드가 실행되지 않았습니다. 기본 포트로 서버 오픈을 시도합니다.");
+			Log.log(Level.Warning, "JttpServer.open() 메소드가 실행되지 않았습니다. 기본 포트로 서버 오픈을 시도합니다.");
 			open(DefaultPort);
 		}
 		serverThread.start();
@@ -94,8 +85,8 @@ public class JttpServer implements Runnable, IJttpServer{
 					Log.info("%s이 로드되었습니다.", pageName);
 				}
 			} catch (Exception e) {
-				Log.log(Log.Warning, "%s 파일 로딩 중 오류가 발생하였습니다. 스킵합니다.", jarFile.getName());
-				Log.error(Log.Warning, e);
+				Log.log(Level.Warning, "%s 파일 로딩 중 오류가 발생하였습니다. 스킵합니다.", jarFile.getName());
+				Log.error(Level.Warning, e);
 				continue;
 			} 
 		}
