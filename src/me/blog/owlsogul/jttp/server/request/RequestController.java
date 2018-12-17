@@ -11,6 +11,7 @@ import me.blog.owlsogul.jttp.server.observer.ObserverList;
 import me.blog.owlsogul.jttp.server.observer.client.ClientRequestObserver;
 import me.blog.owlsogul.jttp.server.request.exception.DuplicatePageException;
 import me.blog.owlsogul.jttp.server.request.exception.NoRequestPageException;
+import me.blog.owlsogul.jttp.server.request.page.RequestPage;
 import me.blog.owlsogul.jttp.server.util.Log;
 
 public class RequestController implements IRequestController{
@@ -24,6 +25,7 @@ public class RequestController implements IRequestController{
 	}
 	
 	public String parseRequest(Client client, String rawData) {
+		long currentTime = System.currentTimeMillis();
 		Gson gson = new Gson();
 		Response response = null;
 		try {
@@ -42,13 +44,14 @@ public class RequestController implements IRequestController{
 		}
 		Object[] observerData = {client, rawData, response};
 		requestObservers.observe(observerData);
-		Log.info("%s의 요청: %s, 응답: %s", client, rawData, response);
+		Log.info("%s의 요청: %s, 응답: %s, 소요시간: %dms", client, rawData, response, System.currentTimeMillis() - currentTime);
 		return gson.toJson(response);
 	}
 	
 	public void addRequestPage(String command, RequestPage requestPage) throws DuplicatePageException {
 		if (!requestPages.containsKey(command)) {
 			requestPages.put(command, requestPage);
+			requestPage.onLoad(command);
 		} 
 		else {
 			throw new DuplicatePageException(command);

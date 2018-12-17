@@ -1,6 +1,8 @@
-package me.blog.owlsogul.jttp.server.request;
+package me.blog.owlsogul.jttp.server.request.page;
 
 import me.blog.owlsogul.jttp.server.client.Client;
+import me.blog.owlsogul.jttp.server.request.Request;
+import me.blog.owlsogul.jttp.server.request.Response;
 
 public abstract class RequestPage {
 

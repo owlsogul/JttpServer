@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import com.google.gson.JsonArray;
@@ -17,8 +19,10 @@ import com.google.gson.JsonStreamParser;
 import me.blog.owlsogul.jttp.server.client.ClientController;
 import me.blog.owlsogul.jttp.server.client.IClientController;
 import me.blog.owlsogul.jttp.server.request.IRequestController;
+import me.blog.owlsogul.jttp.server.request.Request;
 import me.blog.owlsogul.jttp.server.request.RequestController;
-import me.blog.owlsogul.jttp.server.request.RequestPage;
+import me.blog.owlsogul.jttp.server.request.page.RequestPage;
+import me.blog.owlsogul.jttp.server.request.page.RequestPageLoader;
 import me.blog.owlsogul.jttp.server.util.Log;
 
 public class JttpServer implements Runnable, IJttpServer{
@@ -27,7 +31,9 @@ public class JttpServer implements Runnable, IJttpServer{
 	private Thread serverThread;
 	private ServerSocket serverSocket;
 	private volatile boolean isRunning;
+	
 	private ClientController clientController;
+	private RequestPageLoader requestPageLoader;
 	private RequestController requestController;
 	
 	public static final int DefaultPort = 30000;
@@ -37,6 +43,7 @@ public class JttpServer implements Runnable, IJttpServer{
 		isRunning = false;
 		requestController = new RequestController();
 		clientController = new ClientController(requestController);
+		requestPageLoader = new RequestPageLoader();
 	}
 	
 	public boolean open(int port) {
@@ -75,40 +82,17 @@ public class JttpServer implements Runnable, IJttpServer{
 	}
 	
 	private void loadRequestPages() {
-		// TODO: 코드 분리
-		File requestFolder = new File("./RequestPages");
-		if (!requestFolder.exists()) {
-			requestFolder.mkdirs();
-			Log.info("요청 페이지 폴더가 존재하지 않아 새로 만들었습니다.");
-		}
+		File requestFolder = requestPageLoader.getRequestPagesFolder();
 		for (File jarFile : requestFolder.listFiles()) {
 			if (!jarFile.getName().endsWith(".jar")) continue;
 			try {
-				// initialize
-				URL jarUrl = jarFile.toURI().toURL();
-				String main = null;
-				String pageName = null;
-				
-				Log.info("%s 파일 로드를 시작합니다", jarFile.getName());
-				
-				// json load
-				@SuppressWarnings("resource")
-				URLClassLoader classLoader = new URLClassLoader(new URL[] {jarUrl}, this.getClass().getClassLoader());
-				JsonStreamParser parser = new JsonStreamParser(new InputStreamReader(classLoader.getResourceAsStream("page-info.json")));
-				JsonArray pageInfoArr = (JsonArray) parser.next();
-				
-				// load
-				for (JsonElement pageInfoEle : pageInfoArr) {
-					JsonObject pageInfoObj = pageInfoEle.getAsJsonObject();
-					main = pageInfoObj.get("main").getAsString();
-					pageName = pageInfoObj.get("page_name").getAsString();
-					RequestPage rp = (RequestPage) classLoader.loadClass(main).newInstance();
-					requestController.addRequestPage(pageName, rp);
-					rp.onLoad(pageName);
+				HashMap<String, RequestPage> pages = requestPageLoader.getRequestPageFromJar(jarFile);
+				for (Entry<String, RequestPage> entry : pages.entrySet()) {
+					String pageName = entry.getKey();
+					RequestPage requestPage = entry.getValue();
+					requestController.addRequestPage(pageName, requestPage);
 					Log.info("%s이 로드되었습니다.", pageName);
 				}
-				
-				
 			} catch (Exception e) {
 				Log.log(Log.Warning, "%s 파일 로딩 중 오류가 발생하였습니다. 스킵합니다.", jarFile.getName());
 				Log.error(Log.Warning, e);
