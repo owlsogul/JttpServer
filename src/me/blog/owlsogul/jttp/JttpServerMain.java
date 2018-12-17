@@ -9,7 +9,7 @@ public class JttpServerMain {
 
 		int port = JttpServer.DefaultPort;
 		try {
-			port = Integer.valueOf(args[1]);
+			port = Integer.valueOf(args[0]);
 		}catch(ArrayIndexOutOfBoundsException | NumberFormatException e) {
 			e.printStackTrace();
 		}
