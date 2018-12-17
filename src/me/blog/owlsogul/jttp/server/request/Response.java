@@ -32,4 +32,9 @@ public class Response {
 		this.responseData = responseData;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("Response(%d, %s)", responseCode, responseData.toString());
+	}
+	
 }

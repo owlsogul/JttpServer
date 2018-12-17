@@ -7,6 +7,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import me.blog.owlsogul.jttp.server.util.Log;
+
 public class Client implements Runnable{
 
 	private Socket socket;
@@ -33,6 +35,7 @@ public class Client implements Runnable{
 	public void sendString(String msg) {
 		pw.println(msg);
 		pw.flush();
+		Log.info("%s으로 데이터를 보냈습니다: %s", toString(), msg);
 	}
 	
 	@Override
@@ -43,6 +46,7 @@ public class Client implements Runnable{
 			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
 			
 			String request = br.readLine();
+			Log.info("%s에서 데이터를 보냈습니다: %s", toString(), request);
 			String response = controller.parseRequest(this, request);
 			sendString(response);
 		} catch (IOException e) {

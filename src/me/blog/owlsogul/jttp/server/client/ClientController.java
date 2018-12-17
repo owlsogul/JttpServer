@@ -7,6 +7,7 @@ import me.blog.owlsogul.jttp.server.observer.ObserverList;
 import me.blog.owlsogul.jttp.server.observer.client.ClientConnectObserver;
 import me.blog.owlsogul.jttp.server.observer.client.ClientDisconnectObserver;
 import me.blog.owlsogul.jttp.server.request.RequestController;
+import me.blog.owlsogul.jttp.server.util.Log;
 
 public class ClientController implements IClientController{
 
@@ -27,11 +28,13 @@ public class ClientController implements IClientController{
 		clients.add(client);
 		connectObservers.observe(client);
 		client.start();
+		Log.info("클라이언트 %s 가 등록되었습니다.", client.toString());
 	}
 
 	public void unregisterClient(Client client) {
 		clients.remove(client);
 		disconnectObservers.observe(client);
+		Log.info("클라이언트 %s 가 등록 해제되었습니다.", client.toString());
 	}
 
 	public String parseRequest(Client client, String rawData) {

@@ -19,6 +19,9 @@ public class Request {
 		this.data = data;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return String.format("Request(%s, %s)", command, data);
+	}
 	
 }
