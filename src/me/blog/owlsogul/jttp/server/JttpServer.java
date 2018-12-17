@@ -104,6 +104,7 @@ public class JttpServer implements Runnable, IJttpServer{
 					pageName = pageInfoObj.get("page_name").getAsString();
 					RequestPage rp = (RequestPage) classLoader.loadClass(main).newInstance();
 					requestController.addRequestPage(pageName, rp);
+					rp.onLoad(pageName);
 					Log.info("%s이 로드되었습니다.", pageName);
 				}
 				
