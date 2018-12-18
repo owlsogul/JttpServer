@@ -43,22 +43,24 @@ public class JttpServer implements Runnable, IJttpServer{
 			isRunning = true;
 			this.port = port;
 			Log.info("%d번 포트가 열렸습니다.", port);
-			
-			Log.info("요청 페이지 로드를 시작합니다.");
-			loadRequestPages();
-			Log.info("요청 페이지 로드가 완료되었습니다. 로드된 페이지 개수 : %d", requestController.getCountRequestPages());
-			
-			return true;
 		} catch (IOException e) {
+			Log.log(Level.Severe, "서버 열기를 실패했습니다.");
 			Log.error(Level.Severe, e);
 			return false;
 		}
+		
+		Log.info("요청 페이지 로드를 시작합니다.");
+		loadRequestPages();
+		Log.info("요청 페이지 로드가 완료되었습니다. 로드된 페이지 개수 : %d", requestController.getCountRequestPages());
+		return true;
 	}
 	
 	public void listen() {
 		if (isRunning == false) {
 			Log.log(Level.Warning, "JttpServer.open() 메소드가 실행되지 않았습니다. 기본 포트로 서버 오픈을 시도합니다.");
-			open(DefaultPort);
+			if (!open(DefaultPort)) {
+				return;
+			}
 		}
 		serverThread.start();
 		Log.info("%d번 포트로 리스닝 중 입니다.", port);
