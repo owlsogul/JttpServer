@@ -73,6 +73,10 @@ public class RequestController implements IRequestController{
 	}
 
 
+	public void stop() {
+		requestPages.clear();
+		requestObservers.removeAll();
+	}
 	
 	@Override
 	public void addRequestObserver(ClientRequestObserver observer) {

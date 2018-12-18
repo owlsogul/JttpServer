@@ -38,9 +38,13 @@ public class Client implements Runnable{
 	}
 	
 	public void sendString(String msg) {
-		pw.println(msg);
-		pw.flush();
-		Log.info("%s으로 데이터를 보냈습니다: %s", toString(), msg);
+		try {
+			pw.println(msg);
+			pw.flush();
+			Log.info("%s으로 데이터를 보냈습니다: %s", toString(), msg);
+		} catch(NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -73,5 +77,14 @@ public class Client implements Runnable{
 		return socket.getInetAddress().toString();
 	}
 	
+	
+	public void stop() {
+		try {
+			pw.close();
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

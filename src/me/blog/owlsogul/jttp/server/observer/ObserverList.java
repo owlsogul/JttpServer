@@ -22,4 +22,8 @@ public class ObserverList<T extends Observer> {
 			observer.observe(data);
 		}
 	}
+	
+	public void removeAll() {
+		observers.clear();
+	}
 }

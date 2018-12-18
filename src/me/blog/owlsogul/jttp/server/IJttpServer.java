@@ -7,6 +7,7 @@ public interface IJttpServer {
 
 	public boolean open(int port);
 	public void listen();
+	public void stop();
 	public IClientController getClientController();
 	public IRequestController getRequestController();
 	

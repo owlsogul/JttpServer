@@ -104,7 +104,25 @@ public class JttpServer implements Runnable, IJttpServer{
 				Log.info("소켓을 등록했습니다.");
 			} catch (IOException e) {
 				e.printStackTrace();
+				if (serverSocket == null) {
+					break;	
+				}
 			}
 		}
+	}
+
+	@Override
+	public void stop() {
+		
+		clientController.stop();
+		requestController.stop();
+		try {
+			serverSocket.close();
+			serverSocket = null;
+			isRunning = false;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

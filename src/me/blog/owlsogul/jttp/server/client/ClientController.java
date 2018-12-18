@@ -23,6 +23,15 @@ public class ClientController implements IClientController{
 		disconnectObservers = new ObserverList<>();
 	}
 	
+	public void stop() {
+		
+		for (Client client : clients) {
+			client.stop();
+		}
+		connectObservers.removeAll();
+		disconnectObservers.removeAll();
+	}
+	
 	public void registerClient(Socket socket) {
 		Client client = new Client(this, socket);
 		clients.add(client);
