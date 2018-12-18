@@ -84,7 +84,6 @@ public class JttpServer implements Runnable, IJttpServer{
 					String pageName = entry.getKey();
 					RequestPage requestPage = entry.getValue();
 					requestController.addRequestPage(pageName, requestPage);
-					Log.info("%s이 로드되었습니다.", pageName);
 				}
 			} catch (Exception e) {
 				Log.log(Level.Warning, "%s 파일 로딩 중 오류가 발생하였습니다. 스킵합니다.", jarFile.getName());

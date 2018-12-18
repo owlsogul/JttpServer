@@ -53,6 +53,7 @@ public class RequestController implements IRequestController{
 		if (!requestPages.containsKey(command)) {
 			requestPages.put(command, requestPage);
 			requestPage.onLoad(command);
+			Log.info("%s이 로드되었습니다.", command);
 		} 
 		else {
 			throw new DuplicatePageException(command);
